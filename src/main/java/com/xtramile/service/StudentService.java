@@ -34,16 +34,12 @@ public class StudentService {
     }
 
     // update
-    public Student updateStudent(Student student){
-        return studentRepository.save(student);
-    }
-
     public Student updateStudentDetails(Student currentStudent, Student newStudentDetails) {
         currentStudent.setNim(newStudentDetails.getNim());
         currentStudent.setNamaDepan(newStudentDetails.getNamaDepan());
         currentStudent.setNamaBelakang(newStudentDetails.getNamaBelakang());
         currentStudent.setTanggalLahir(newStudentDetails.getTanggalLahir());
-        return currentStudent;
+        return studentRepository.save(currentStudent);
     }
 
     // delete

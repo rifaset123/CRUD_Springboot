@@ -4,15 +4,10 @@ import com.xtramile.entity.Student;
 import com.xtramile.exception.CustomErrorResponse;
 import com.xtramile.service.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -46,11 +41,12 @@ public class StudentController {
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student){
         Student currentStudent = studentService.getStudentById(id);
 
-        if (currentStudent == null)
-            return ResponseEntity.notFound().build();
+        if (currentStudent == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
         Student updatedStudent = studentService.updateStudentDetails(currentStudent, student);
-        return ResponseEntity.ok(updatedStudent);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedStudent);
     }
 
     // delete
